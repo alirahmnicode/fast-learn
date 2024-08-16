@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block title %} Edit "{{ course.title }}" 
+{% endblock %} 
+
+{% block content %}
+<h1 dir="rtl">ویرایش "{{ course.title }}"</h1>
+<div class="d-flex flex-column align-items-center">
+  <div>
+    <h2>بخش های دوره</h2>
+    <form method="post">
+      {{ formset }} {{ formset.management_form }} {% csrf_token %}
+      <input type="submit" value="Save modules" />
+    </form>
+  </div>
+</div>
+{% endblock %}

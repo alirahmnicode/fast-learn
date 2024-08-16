@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {% if subject %}
+    {{ subject.title }} courses
+  {% else %}
+    All courses
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <h1 dir="rtl">
+    {% if subject %}
+      <span dir="ltr">{{ subject.title }} دوره های</span>
+    {% else %}
+      تمام دوره ها
+    {% endif %}
+  </h1>
+  <div class="contents">
+    <h3>دسته بندی ها</h3>
+    <ul id="modules">
+      <li {% if not subject %}class="selected"{% endif %}>
+        <a href="{% url "course_list" %}">همه</a>
+      </li>
+      {% for s in subjects %}
+        <li {% if subject == s %}class="selected"{% endif %}>
+          <a href="{% url 'courses:course_list_subject' s.slug %}">
+            {{ s.title }}
+            <br>
+            <span>{{ s.total_courses }} course{{ s.total_courses|pluralize }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+    <div class="row">
+    {% for course in courses %}
+      {% with subject=course.subject %}
+      <div class="col-sm-4 mt-3">
+        <div class="card">
+          <img src="https://www.unite.ai/wp-content/uploads/2022/04/AI-Python-Libraries-1000x600.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">
+              <a href="{% url 'courses:course_detail' course.slug %}">
+              {{ course.title }}
+            </a></h5>
+            <p class="card-text">
+              <a href="{% url 'courses:course_list_subject' subject.slug %}">#{{ subject }}</a>
+              {{ course.total_modules }} modules.
+              Instructor: {{ course.owner.get_full_name }}</p>
+            <a href="{% url 'courses:course_detail' course.slug %}" class="btn btn-primary">ثبت نام</a>
+          </div>
+        </div>
+      </div>
+      {% endwith %}
+    {% endfor %}
+  </div>
+{% endblock %}

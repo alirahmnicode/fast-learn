@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}My courses{% endblock %}
+
+{% block content %}
+  <h1 dir="rtl">دوره های من</h1>
+  <div class="d-flex" dir="rtl">
+    {% for course in object_list %}
+      <div class="course-info m-3">
+        <h3>{{ course.title }}</h3>
+        <p><a href="{% url "students:student_course_detail" course.id %}">
+        ادامه دوره</a></p>
+      </div>
+    {% empty %}
+    <div class="d-flex flex-column align-items-center">
+        شما تا کنون در هیچ دوره ای شرکت نکرده اید
+        <a href="{% url "course_list" %}">جست و جو در دوره ها</a>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}

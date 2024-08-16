@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Sign up
+{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column align-items-center">
+  <div class="mt-5">
+    <form class="base-form d-flex flex-column" method="post">
+      <p dir="rtl">ساخت حساب کاربری</p>
+      {{ form.as_p }}
+      {% csrf_token %}
+      <p><input type="submit" value="ثبت نام"></p>
+      <p dir="rtl">حساب کاربری دارید؟ <a href="{% url 'students:student_login' %}"> ورود</a></p>
+    </form>
+  </div>
+</div>
+{% endblock %}

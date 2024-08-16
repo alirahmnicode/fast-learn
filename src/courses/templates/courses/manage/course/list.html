@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}My courses{% endblock %}
+
+{% block content %}
+<div dir="rtl">
+  <h1>دوره های من</h1>
+  <div class="row">
+    {% for course in object_list %}
+    <div class="col-sm-4 mt-3">
+      <div class="course-info">
+        <h3>{{ course.title }}</h3>
+        <p>
+          <a href="{% url "courses:course_edit" course.id %}">Edit</a>
+          <a href="{% url "courses:course_delete" course.id %}">Delete</a>
+          <a href="{% url "courses:course_module_update" course.id %}">Edit modules</a>
+          {% if course.modules.count > 0 %}
+            <a href="{% url "courses:module_content_list" course.modules.first.id %}">
+            Manage contents</a>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+    {% empty %}
+      <p>You haven't d any courses yet.</p>
+    {% endfor %}
+    <p class="mt-5">
+      <a href="{% url "courses:course_create" %}" class="button"> ساخت دوره جدید</a>
+    </p>
+  </div>
+</div>
+{% endblock %}
